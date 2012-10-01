@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 
     // spawn the testacular server
     grunt.utils.spawn({
-      cmd: 'node_modules/.bin/testacular',
+      cmd: process.platform === 'win32' ? 'node_modules\\.bin\\testacular.cmd' : 'node_modules/.bin/testacular',
       args: ['start', this.file.src, '--single-run']
     }, function(error, result, code) {
       console.log(result.stdout);
