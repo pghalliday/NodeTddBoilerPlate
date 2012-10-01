@@ -6,13 +6,13 @@ module.exports = function(grunt) {
     var done = this.async();
 
     // spawn the testacular server
-    grunt.utils.spawn({
+    var child = grunt.utils.spawn({
       cmd: process.platform === 'win32' ? 'node_modules\\.bin\\testacular.cmd' : 'node_modules/.bin/testacular',
       args: ['start', this.file.src, '--single-run']
     }, function(error, result, code) {
-      console.log(result.stdout);
-      console.log(result.stderr);
       done(code === 0);
     });
+    child.stdout.pipe(process.stdout);
+    child.stderr.pipe(process.stderr);
   });
 };
